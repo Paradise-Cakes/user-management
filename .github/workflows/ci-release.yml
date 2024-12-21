@@ -174,7 +174,7 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/terraform
           terraform import aws_cognito_user_pool.paradise_cakes_user_pool ${DEV_USER_POOL_ID}
-          terraform import aws_cognito_user_pool_client.paradise_cakes_client ${COGNITO_APP_CLIENT_ID}
+          terraform import aws_cognito_user_pool_client.paradise_cakes_client ${DEV_USER_POOL_ID}/${COGNITO_APP_CLIENT_ID}
           terraform import aws_cognito_user_group.paradise_cakes_admin_group ${DEV_USER_POOL_ID}/admins
           terraform import aws_cognito_user_group.paradise_cakes_admin_group ${DEV_USER_POOL_ID}/users
           terraform import aws_cognito_user_group.paradise_cakes_admin_group ${DEV_USER_POOL_ID}/guests
@@ -286,7 +286,7 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/terraform
           terraform import aws_cognito_user_pool.paradise_cakes_user_pool ${PROD_USER_POOL_ID}
-          terraform import aws_cognito_user_pool_client.paradise_cakes_client ${PROD_COGNITO_APP_CLIENT_ID}
+          terraform import aws_cognito_user_pool_client.paradise_cakes_client ${PROD_USER_POOL_ID}/${PROD_COGNITO_APP_CLIENT_ID}
           terraform import aws_cognito_user_group.paradise_cakes_admin_group ${PROD_USER_POOL_ID}/admins
           terraform import aws_cognito_user_group.paradise_cakes_admin_group ${PROD_USER_POOL_ID}/users
           terraform import aws_cognito_user_group.paradise_cakes_admin_group ${PROD_USER_POOL_ID}/guests
