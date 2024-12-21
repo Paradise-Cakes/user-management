@@ -163,19 +163,6 @@ jobs:
             --backend-config="bucket=users-dev-api-tfstate" \
             --backend-config="key=users-dev-api.tfstate"
 
-      - name: TEMP IMPORT COGNITO DEV
-        env:
-          TF_VAR_environment: dev
-          TF_VAR_region: us-east-1
-          TF_VAR_docker_image_tag: "${{env.BRANCH_NAME}}-${{env.SHORT_SHA}}"
-          TF_VAR_short_version: "${{env.SHORT_SHA}}"
-          DEV_USER_POOL_ID: ${{ secrets.DEV_USER_POOL_ID }}
-          COGNITO_APP_CLIENT_ID: ${{ secrets.COGNITO_APP_CLIENT_ID }}
-        run: |
-          cd ${GITHUB_WORKSPACE}/terraform
-          terraform import aws_cognito_user_group.paradise_cakes_user_group ${DEV_USER_POOL_ID}/users
-          terraform import aws_cognito_user_group.paradise_cakes_guest_group ${DEV_USER_POOL_ID}/guests
-
       - name: Terraform Plan - DEV
         id: tf-plan-dev
         env:
