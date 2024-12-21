@@ -17,7 +17,9 @@ resource "aws_lambda_function" "app" {
 
   environment {
     variables = {
-      REGION = "us-east-1"
+      REGION                = "us-east-1"
+      COGNITO_APP_CLIENT_ID = aws_cognito_user_pool_client.paradise_cakes_client.id
+      COGNITO_USER_POOL_ID  = aws_cognito_user_pool.paradise_cakes_user_pool.id
     }
   }
 }
