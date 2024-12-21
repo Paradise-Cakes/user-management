@@ -165,6 +165,10 @@ jobs:
 
       - name: TEMP IMPORT COGNITO DEV
         env:
+          TF_VAR_environment: dev
+          TF_VAR_region: us-east-1
+          TF_VAR_docker_image_tag: "${{env.BRANCH_NAME}}-${{env.SHORT_SHA}}"
+          TF_VAR_short_version: "${{env.SHORT_SHA}}"
           DEV_USER_POOL_ID: ${{ secrets.DEV_USER_POOL_ID }}
           COGNITO_APP_CLIENT_ID: ${{ secrets.COGNITO_APP_CLIENT_ID }}
         run: |
@@ -273,6 +277,10 @@ jobs:
 
       - name: TEMP IMPORT COGNITO PROD
         env:
+          TF_VAR_environment: prod
+          TF_VAR_region: us-east-1
+          TF_VAR_docker_image_tag: "${{env.BRANCH_NAME}}-${{env.SHORT_SHA}}"
+          TF_VAR_short_version: "${{env.SHORT_SHA}}"
           PROD_USER_POOL_ID: ${{ secrets.PROD_USER_POOL_ID }}
           PROD_COGNITO_APP_CLIENT_ID: ${{ secrets.COGNITO_APP_CLIENT_ID }}
         run: |
