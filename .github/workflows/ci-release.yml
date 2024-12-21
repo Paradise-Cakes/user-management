@@ -266,7 +266,7 @@ jobs:
           TF_VAR_docker_image_tag: "${{env.BRANCH_NAME}}-${{env.SHORT_SHA}}"
           TF_VAR_short_version: "${{env.SHORT_SHA}}"
           PROD_USER_POOL_ID: ${{ secrets.PROD_USER_POOL_ID }}
-          PROD_COGNITO_APP_CLIENT_ID: ${{ secrets.COGNITO_APP_CLIENT_ID }}
+          PROD_COGNITO_APP_CLIENT_ID: ${{ secrets.PROD_COGNITO_APP_CLIENT_ID }}
         run: |
           cd ${GITHUB_WORKSPACE}/terraform
           terraform import aws_cognito_user_pool.paradise_cakes_user_pool ${PROD_USER_POOL_ID}
