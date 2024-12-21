@@ -54,7 +54,7 @@ def function_signup(cognito_client, cleanup_cognito_users):
     password = os.getenv("DEV_EMAIL_PASSWORD")
 
     cognito_client.sign_up(
-        ClientId=os.environ.get("COGNITO_APP_CLIENT_ID"),
+        ClientId=os.environ.get("DEV_COGNITO_APP_CLIENT_ID"),
         Username=email,
         Password=password,
         UserAttributes=[
@@ -94,7 +94,7 @@ def function_confirmed_account(
     confirmation_code = function_signup_and_verification_code["confirmation_code"]
 
     cognito_client.confirm_sign_up(
-        ClientId=os.environ.get("COGNITO_APP_CLIENT_ID"),
+        ClientId=os.environ.get("DEV_COGNITO_APP_CLIENT_ID"),
         Username=email,
         ConfirmationCode=confirmation_code,
     )
@@ -110,7 +110,7 @@ def function_forgot_password_code(
     email = function_confirmed_account["email"]
 
     cognito_client.forgot_password(
-        ClientId=os.environ.get("COGNITO_APP_CLIENT_ID"), Username=email
+        ClientId=os.environ.get("DEV_COGNITO_APP_CLIENT_ID"), Username=email
     )
 
     reset_code = get_user_confirmation_code_from_email(
