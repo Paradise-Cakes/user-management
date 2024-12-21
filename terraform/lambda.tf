@@ -28,7 +28,7 @@ resource "aws_lambda_function" "customize_emails_trigger" {
   image_uri     = local.lambda_image
   package_type  = "Image"
   function_name = "customize-emails-trigger"
-  role          = aws_iam_role.pc_api_role.arn
+  role          = aws_iam_role.users_api_role.arn
 
   image_config {
     command = ["src.customize_emails_trigger.handler.lambda_handler"]
