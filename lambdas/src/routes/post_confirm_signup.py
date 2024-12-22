@@ -1,17 +1,13 @@
-import os
-
 import boto3
 from aws_lambda_powertools import Logger
 from botocore.exceptions import ClientError
-from dotenv import load_dotenv
-from fastapi import APIRouter, Form, HTTPException, Response
+from fastapi import APIRouter, Depends, Form, HTTPException, Response
 
+from src.lib.aws_resources import get_cognito_app_client_id, get_cognito_user_pool_id
 from src.lib.response import fastapi_gateway_response
 
 logger = Logger()
 router = APIRouter()
-
-load_dotenv()
 
 cognito_client = boto3.client("cognito-idp", region_name="us-east-1")
 
@@ -33,18 +29,20 @@ def post_confirm_signup(
     email: str = Form(...),
     password: str = Form(...),
     confirmation_code: str = Form(...),
+    cognito_app_client_id: str = Depends(get_cognito_app_client_id),
+    cognito_user_pool_id: str = Depends(get_cognito_user_pool_id),
 ):
     logger.info(f"Confirming user with email {email}")
     try:
         cognito_client.confirm_sign_up(
-            ClientId=os.environ.get("COGNITO_APP_CLIENT_ID"),
+            ClientId=cognito_app_client_id,
             Username=email,
             ConfirmationCode=confirmation_code,
         )
         auth_response = cognito_client.initiate_auth(
             AuthFlow="USER_PASSWORD_AUTH",
             AuthParameters={"USERNAME": email, "PASSWORD": password},
-            ClientId=os.environ.get("COGNITO_APP_CLIENT_ID"),
+            ClientId=cognito_app_client_id,
         )
         access_token = auth_response["AuthenticationResult"]["AccessToken"]
         refresh_token = auth_response["AuthenticationResult"]["RefreshToken"]
@@ -54,7 +52,7 @@ def post_confirm_signup(
             key="access_token",
             value=access_token,
             max_age=expires_in,
-            secure=False,
+            secure=True,
             httponly=True,
             samesite="strict",
         )
@@ -64,12 +62,18 @@ def post_confirm_signup(
             key="refresh_token",
             value=refresh_token,
             max_age=refresh_token_expires_in,
-            secure=False,
+            secure=True,
             httponly=True,
             samesite="strict",
         )
 
         user_info = get_user_info(access_token)
+
+        cognito_client.admin_add_user_to_group(
+            UserPoolId=cognito_user_pool_id,
+            Username=user_info["email"],
+            GroupName="users",
+        )
 
         return fastapi_gateway_response(
             200,

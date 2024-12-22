@@ -1,17 +1,12 @@
-import os
-
 import boto3
 from aws_lambda_powertools import Logger
 from botocore.exceptions import ClientError
-from dotenv import load_dotenv
 from fastapi import APIRouter, Form, HTTPException, Request, Response
 
 from src.lib.response import fastapi_gateway_response
 
 logger = Logger()
 router = APIRouter()
-
-load_dotenv()
 
 cognito_client = boto3.client("cognito-idp", region_name="us-east-1")
 

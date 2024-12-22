@@ -10,7 +10,7 @@ test_client = TestClient(app)
 
 @pytest.fixture(autouse=True)
 def mock_env(monkeypatch):
-    monkeypatch.setenv("USER_POOL_ID", "us-east-1_123456789")
+    monkeypatch.setenv("COGNITO_USER_POOL_ID", "us-east-1_123456789")
 
 
 @pytest.fixture(autouse=True, scope="function")

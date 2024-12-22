@@ -1,17 +1,13 @@
-import os
-
 import boto3
 from aws_lambda_powertools import Logger
 from botocore.exceptions import ClientError
-from dotenv import load_dotenv
-from fastapi import APIRouter, Form, HTTPException, Response
+from fastapi import APIRouter, Depends, Form, HTTPException, Response
 
+from src.lib.aws_resources import get_cognito_app_client_id
 from src.lib.response import fastapi_gateway_response
 
 logger = Logger()
 router = APIRouter()
-
-load_dotenv()
 
 cognito_client = boto3.client("cognito-idp", region_name="us-east-1")
 
@@ -28,12 +24,17 @@ def get_user_info(access_token):
 
 @logger.inject_lambda_context(log_event=True)
 @router.post("/signin", status_code=200, tags=["Authentication"])
-def post_signin(response: Response, email: str = Form(...), password: str = Form(...)):
+def post_signin(
+    response: Response,
+    email: str = Form(...),
+    password: str = Form(...),
+    cognito_app_client_id: str = Depends(get_cognito_app_client_id),
+):
     try:
         auth_response = cognito_client.initiate_auth(
             AuthFlow="USER_PASSWORD_AUTH",
             AuthParameters={"USERNAME": email, "PASSWORD": password},
-            ClientId=os.environ.get("COGNITO_APP_CLIENT_ID"),
+            ClientId=cognito_app_client_id,
         )
 
         access_token = auth_response["AuthenticationResult"]["AccessToken"]
