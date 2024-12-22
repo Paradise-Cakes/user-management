@@ -46,8 +46,8 @@ jobs:
       - name: Lint
         run: bash ${GITHUB_WORKSPACE}/ci/lint.sh
 
-      # - name: Test
-      #   run: bash ${GITHUB_WORKSPACE}/ci/test.sh
+      - name: Test
+        run: bash ${GITHUB_WORKSPACE}/ci/test.sh
 
   ecr-build-push-dev-us-east-1:
     runs-on: ubuntu-latest
