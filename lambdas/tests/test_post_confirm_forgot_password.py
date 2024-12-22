@@ -3,9 +3,7 @@ from botocore.stub import Stubber
 from fastapi.testclient import TestClient
 
 from src.api import app
-from src.routes.post_confirm_forgot_password import (
-    cognito_client,
-)
+from src.routes.post_confirm_forgot_password import cognito_client
 
 test_client = TestClient(app)
 

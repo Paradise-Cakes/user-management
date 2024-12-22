@@ -1,6 +1,7 @@
 import json
 
 import pytest
+
 from src.api import app
 from src.lib.aws_resources import get_cognito_app_client_id, get_cognito_user_pool_id
 

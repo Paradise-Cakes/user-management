@@ -1,11 +1,11 @@
 import boto3
 from aws_lambda_powertools import Logger
 from botocore.exceptions import ClientError
-from fastapi import APIRouter, Form, Depends
+from fastapi import APIRouter, Depends, Form
 from fastapi.exceptions import HTTPException
 
-from src.lib.response import fastapi_gateway_response
 from src.lib.aws_resources import get_cognito_app_client_id
+from src.lib.response import fastapi_gateway_response
 
 logger = Logger()
 router = APIRouter()

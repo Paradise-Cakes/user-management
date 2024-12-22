@@ -1,9 +1,9 @@
 import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from mangum import Mangum
-
 
 from src.routes import (
     post_confirm_forgot_password,
