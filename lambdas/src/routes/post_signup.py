@@ -1,20 +1,16 @@
-import os
-
 import boto3
 from aws_lambda_powertools import Logger
 from botocore.exceptions import ClientError
-from dotenv import load_dotenv
-from fastapi import APIRouter, Form
+from fastapi import APIRouter, Form, Depends
 from fastapi.exceptions import HTTPException
 
 from src.lib.response import fastapi_gateway_response
+from src.lib.aws_resources import get_cognito_app_client_id
 
 logger = Logger()
 router = APIRouter()
 
 cognito_client = boto3.client("cognito-idp", region_name="us-east-1")
-
-load_dotenv()
 
 
 @logger.inject_lambda_context(log_event=True)
@@ -24,12 +20,13 @@ def post_signup(
     password: str = Form(...),
     first_name: str = Form(...),
     last_name: str = Form(...),
+    cognito_app_client_id: str = Depends(get_cognito_app_client_id),
 ):
     logger.info(f"Creating user with email {email}")
 
     try:
         response = cognito_client.sign_up(
-            ClientId=os.environ.get("COGNITO_APP_CLIENT_ID"),
+            ClientId=cognito_app_client_id,
             Username=email,
             Password=password,
             UserAttributes=[

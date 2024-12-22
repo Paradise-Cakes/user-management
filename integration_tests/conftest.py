@@ -1,20 +1,23 @@
 import os
 import pytest
 
-from moto import cognitoidp as mock_cognitoidp
+from moto import mock_aws
 import boto3
 
 
-@pytest.fixture(scope="function", autouse=True)
-def mock_env(monkeypatch):
-    monkeypatch.setenv("COGNITO_APP_CLIENT_ID", "test_client_id")
-    monkeypatch.setenv("COGNITO_USER_POOL_ID", "test_user_pool_id")
-    monkeypatch.setenv("COGNITO_REGION", "us-east-1")
+@pytest.fixture(scope="function")
+def aws_credentials():
+    """Mocked AWS Credentials for moto."""
+    os.environ["AWS_ACCESS_KEY_ID"] = "testing"
+    os.environ["AWS_SECRET_ACCESS_KEY"] = "testing"
+    os.environ["AWS_SECURITY_TOKEN"] = "testing"
+    os.environ["AWS_SESSION_TOKEN"] = "testing"
+    os.environ["AWS_DEFAULT_REGION"] = "us-east-1"
 
 
 @pytest.fixture(scope="function")
 def setup_cognito_user_pool():
-    with mock_cognitoidp():
+    with mock_aws():
         cognito_client = boto3.client("cognito-idp", region_name="us-east-1")
 
         user_pool_response = cognito_client.create_user_pool(
@@ -36,7 +39,6 @@ def setup_cognito_user_pool():
             ClientName="test-client",
         )
         client_id = user_pool_client_response["UserPoolClient"]["ClientId"]
-
         os.environ["COGNITO_APP_CLIENT_ID"] = client_id
 
         cognito_client.admin_create_user(

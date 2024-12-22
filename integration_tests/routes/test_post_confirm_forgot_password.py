@@ -18,3 +18,4 @@ def test_confirm_forgot_password_success(setup_cognito_user_pool):
     assert response.json() == {
         "message": "Password reset for anthony.soprano@gmail.com successful"
     }
+    assert False

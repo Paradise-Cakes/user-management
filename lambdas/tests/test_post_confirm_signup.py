@@ -9,12 +9,6 @@ from src.routes.post_confirm_signup import cognito_client
 test_client = TestClient(app)
 
 
-@pytest.fixture(autouse=True)
-def mock_env(monkeypatch):
-    monkeypatch.setenv("COGNITO_APP_CLIENT_ID", "123456789")
-    monkeypatch.setenv("COGNITO_USER_POOL_ID", "us-east-1_123456789")
-
-
 @pytest.fixture(autouse=True, scope="function")
 def cognito_stub():
     with Stubber(cognito_client) as cognito_stubber:

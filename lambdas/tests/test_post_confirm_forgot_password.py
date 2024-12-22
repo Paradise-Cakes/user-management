@@ -3,14 +3,11 @@ from botocore.stub import Stubber
 from fastapi.testclient import TestClient
 
 from src.api import app
-from src.routes.post_confirm_forgot_password import cognito_client
+from src.routes.post_confirm_forgot_password import (
+    cognito_client,
+)
 
 test_client = TestClient(app)
-
-
-@pytest.fixture(autouse=True)
-def mock_env(monkeypatch):
-    monkeypatch.setenv("COGNITO_APP_CLIENT_ID", "123456789")
 
 
 @pytest.fixture(autouse=True, scope="function")
