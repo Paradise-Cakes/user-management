@@ -54,7 +54,7 @@ def post_confirm_signup(
             key="access_token",
             value=access_token,
             max_age=expires_in,
-            secure=False,
+            secure=True,
             httponly=True,
             samesite="strict",
         )
@@ -64,12 +64,18 @@ def post_confirm_signup(
             key="refresh_token",
             value=refresh_token,
             max_age=refresh_token_expires_in,
-            secure=False,
+            secure=True,
             httponly=True,
             samesite="strict",
         )
 
         user_info = get_user_info(access_token)
+
+        cognito_client.admin_add_user_to_group(
+            UserPoolId=os.environ.get("COGNITO_USER_POOL_ID"),
+            Username=user_info["email"],
+            GroupName="users",
+        )
 
         return fastapi_gateway_response(
             200,
