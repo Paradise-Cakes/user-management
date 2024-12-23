@@ -76,7 +76,9 @@ resource "aws_iam_policy" "users_api_policy" {
       {
         Action = [
           "cognito-idp:AdminAddUserToGroup",
-        ]
+        ],
+        Effect   = "Allow",
+        Resource = "arn:aws:cognito-idp:us-east-1:${data.aws_caller_identity.current.account_id}:userpool/${aws_cognito_user_pool.paradise_cakes_user_pool.id}"
       }
     ]
   })
