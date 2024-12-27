@@ -10,10 +10,10 @@ from src.routes import (
     post_confirm_signup,
     post_forgot_password,
     post_logout,
+    post_refresh_signin,
     post_resend_confirmation_code,
     post_signin,
     post_signup,
-    post_refresh_signin,
 )
 
 app = FastAPI(title="Users API", version="1.0.0", root_path="/v1")
