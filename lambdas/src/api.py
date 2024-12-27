@@ -10,6 +10,7 @@ from src.routes import (
     post_confirm_signup,
     post_forgot_password,
     post_logout,
+    post_refresh_signin,
     post_resend_confirmation_code,
     post_signin,
     post_signup,
@@ -32,6 +33,7 @@ app.include_router(post_logout.router)
 app.include_router(post_resend_confirmation_code.router)
 app.include_router(post_signin.router)
 app.include_router(post_signup.router)
+app.include_router(post_refresh_signin.router)
 
 
 def lambda_handler(event, context):
