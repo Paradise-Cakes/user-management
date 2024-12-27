@@ -72,6 +72,13 @@ resource "aws_iam_policy" "users_api_policy" {
           "arn:aws:s3:::desserts-images",
           "arn:aws:s3:::desserts-images/*"
         ]
+      },
+      {
+        Action = [
+          "cognito-idp:AdminAddUserToGroup",
+        ],
+        Effect   = "Allow",
+        Resource = "arn:aws:cognito-idp:us-east-1:${data.aws_caller_identity.current.account_id}:userpool/${aws_cognito_user_pool.paradise_cakes_user_pool.id}"
       }
     ]
   })
