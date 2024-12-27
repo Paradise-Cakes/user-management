@@ -13,6 +13,7 @@ from src.routes import (
     post_resend_confirmation_code,
     post_signin,
     post_signup,
+    post_refresh_signin,
 )
 
 app = FastAPI(title="Users API", version="1.0.0", root_path="/v1")
@@ -32,6 +33,7 @@ app.include_router(post_logout.router)
 app.include_router(post_resend_confirmation_code.router)
 app.include_router(post_signin.router)
 app.include_router(post_signup.router)
+app.include_router(post_refresh_signin.router)
 
 
 def lambda_handler(event, context):
