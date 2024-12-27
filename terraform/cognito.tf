@@ -14,6 +14,11 @@ resource "aws_cognito_user_pool_client" "paradise_cakes_client" {
   allowed_oauth_flows          = ["code", "implicit"]
   allowed_oauth_scopes         = ["phone", "email", "openid", "aws.cognito.signin.user.admin", "profile"]
   supported_identity_providers = ["COGNITO"]
+  refresh_token_validity       = 30
+  enable_token_revocation      = true
+  token_validity_units {
+    refresh_token = "days"
+  }
 
   callback_urls = [
     "https://megsparadisecakes.com",
