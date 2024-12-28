@@ -36,7 +36,7 @@ def post_refresh_signin(
             key="access_token",
             value=access_token,
             max_age=expires_in,
-            secure=False,
+            secure=True,
             httponly=True,
             samesite="none",
         )
@@ -48,7 +48,7 @@ def post_refresh_signin(
                 key="refresh_token",
                 value=new_refresh_token,
                 max_age=refresh_token_expires_in,
-                secure=False,
+                secure=True,
                 httponly=True,
                 samesite="none",
             )
