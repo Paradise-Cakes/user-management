@@ -14,9 +14,13 @@ resource "aws_cognito_user_pool_client" "paradise_cakes_client" {
   allowed_oauth_flows          = ["code", "implicit"]
   allowed_oauth_scopes         = ["phone", "email", "openid", "aws.cognito.signin.user.admin", "profile"]
   supported_identity_providers = ["COGNITO"]
+  access_token_validity        = 1
   refresh_token_validity       = 30
+  id_token_validity            = 1
   token_validity_units {
+    access_token = "hours"
     refresh_token = "days"
+    id_token = "hours"
   }
 
   callback_urls = [
