@@ -48,8 +48,8 @@ resource "aws_cognito_user_pool" "paradise_cakes_user_pool" {
   sms_authentication_message = "Your code is {####}"
 
   device_configuration {
-    challenge_required_on_new_device      = true
-    device_only_remembered_on_user_prompt = true
+    challenge_required_on_new_device      = false
+    device_only_remembered_on_user_prompt = false
   }
 
   email_configuration {
