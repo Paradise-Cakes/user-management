@@ -23,20 +23,20 @@ def lambda_handler(event, context):
         )
 
     elif trigger_source == "CustomMessage_ForgotPassword":
-        username = event["request"]["userAttributes"]["email"]
+        # username = event["request"]["userAttributes"]["email"]
 
-        reset_link = (
-            f"{get_website_url()}/?reset=true"
-            f"?username={urllib.parse.quote(username)}"
-            f"&code={urllib.parse.quote(code)}"
-        )
+        # reset_link = (
+        #     f"{get_website_url()}/?reset=true"
+        #     f"?username={urllib.parse.quote(username)}"
+        #     f"&code={urllib.parse.quote(code)}"
+        # )
 
         event["response"]["emailSubject"] = "Reset Your Password"
         event["response"]["emailMessage"] = (
-            f"Hello {first_name}, <br><br>"
-            "We received a request to reset your password. Click the link below to reset your password<br><br>"
-            f"<a href='{reset_link}'>Reset Password</a><br><br>"
-            f"If you did not request this password reset, please ignore this email."
+            f"Hello {first_name},<br><br>"
+            "We received a request to reset your password. Your reset code is: "
+            f"<b>{code}</b><br><br>"
+            "If you did not request this, please ignore this email..."
         )
 
     return event
