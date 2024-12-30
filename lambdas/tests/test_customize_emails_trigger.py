@@ -44,5 +44,5 @@ def test_handler_forgot_password_message():
     result = lambda_handler(event, default_context)
     assert result["response"]["emailSubject"] == "Reset Your Password"
     assert result["response"]["emailMessage"] == (
-        "<p>Hello Anthony,</p><p>Click the link below to reset your password:</p><p><a href='localhost:5173/?reset=true?username=anthony.soprano%40gmail.com&code=123456'>Reset Password</a></p><p>If you did not request this password reset, please ignore this email.</p>"
+        "Hello Anthony, <br><br>We received a request to reset your password. Click the link below to reset your password<br><br><a href='localhost:5173/?reset=true?username=anthony.soprano%40gmail.com&code=123456'>Reset Password</a><br><br>If you did not request this password reset, please ignore this email."
     )
