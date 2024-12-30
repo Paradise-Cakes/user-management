@@ -28,7 +28,7 @@ def lambda_handler(event, context):
         event["response"]["emailMessage"] = (
             f"Hello {first_name}, <br><br>"
             f"We received a request to reset your password. Your reset code is {code}. You can also click the link below to reset your password.<br><br>"
-            f"<a href='{link_parameter}'>Reset Password</a><br><br>"
+            f"{link_parameter}<br><br>"
             f"If you did not request this password reset, please ignore this email."
         )
 
