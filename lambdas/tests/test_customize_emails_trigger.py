@@ -31,7 +31,7 @@ def test_handler_forgot_password_message():
         "request": {
             "userAttributes": {
                 "given_name": "Anthony",
-                "username": "anthony.soprano@gmail.com",
+                "email": "anthony.soprano@gmail.com",
             },
             "codeParameter": "123456",
         },

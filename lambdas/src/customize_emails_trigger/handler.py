@@ -22,7 +22,7 @@ def lambda_handler(event, context):
 
     elif trigger_source == "CustomMessage_ForgotPassword":
         code = event["request"]["codeParameter"]
-        username = event["request"]["userAttributes"]["username"]
+        username = event["request"]["userAttributes"]["email"]
 
         reset_link = (
             f"https://megsparadisecakes.com/?reset=true"
