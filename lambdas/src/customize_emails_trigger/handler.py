@@ -7,12 +7,20 @@ from src.lib.aws_resources import get_website_url
 logger = Logger()
 
 
+def get_reset_link(code, username):
+    reset_link = (
+        f"{get_website_url()}/?reset=true"
+        f"&username={urllib.parse.quote(username)}"
+        f"&code={urllib.parse.quote(code)}"
+    )
+    return reset_link
+
+
 @logger.inject_lambda_context(log_event=True)
 def lambda_handler(event, context):
     first_name = event.get("request").get("userAttributes").get("given_name")
     trigger_source = event.get("triggerSource")
     code = event.get("request").get("codeParameter")
-    link_parameter = event.get("request").get("linkParameter")
 
     if trigger_source == "CustomMessage_SignUp":
         event["response"]["emailSubject"] = "Welcome to Paradise Cakes!"
@@ -24,11 +32,13 @@ def lambda_handler(event, context):
         )
 
     elif trigger_source == "CustomMessage_ForgotPassword":
+        username = event["request"]["userAttributes"]["email"]
+
         event["response"]["emailSubject"] = "Reset Your Password"
         event["response"]["emailMessage"] = (
             f"Hello {first_name}, <br><br>"
             f"We received a request to reset your password. Your reset code is {code}. You can also click the link below to reset your password.<br><br>"
-            f"{link_parameter}<br><br>"
+            f"<a href='{get_reset_link(code, username)}'>Reset Password</a><br><br>"
             f"If you did not request this password reset, please ignore this email."
         )
 
