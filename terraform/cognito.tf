@@ -18,9 +18,9 @@ resource "aws_cognito_user_pool_client" "paradise_cakes_client" {
   refresh_token_validity       = 30
   id_token_validity            = 1
   token_validity_units {
-    access_token = "hours"
+    access_token  = "hours"
     refresh_token = "days"
-    id_token = "hours"
+    id_token      = "hours"
   }
 
   callback_urls = [
