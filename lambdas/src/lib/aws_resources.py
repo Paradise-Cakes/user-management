@@ -10,4 +10,4 @@ def get_cognito_user_pool_id():
 
 
 def get_website_url():
-    return os.environ.get("WEBSITE_URL", "localhost:5173")
+    return os.environ.get("WEBSITE_URL", "http://localhost:5173")
