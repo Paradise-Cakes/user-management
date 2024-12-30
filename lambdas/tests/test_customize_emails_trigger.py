@@ -34,6 +34,7 @@ def test_handler_forgot_password_message():
                 "email": "anthony.soprano@gmail.com",
             },
             "codeParameter": "123456",
+            "linkParameter": "http://localhost:5173/?reset=true&username=anthony.soprano%40gmail.com&code=123456",
         },
         "triggerSource": "CustomMessage_ForgotPassword",
         "response": {
