@@ -27,7 +27,7 @@ def lambda_handler(event, context):
         username = event["request"]["userAttributes"]["email"]
 
         reset_link = (
-            f"https://{get_website_url()}/?reset=true"
+            f"{get_website_url()}/?reset=true"
             f"?username={urllib.parse.quote(username)}"
             f"&code={urllib.parse.quote(code)}"
         )
