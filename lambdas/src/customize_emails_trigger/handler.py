@@ -1,6 +1,7 @@
 import urllib.parse
 
 from aws_lambda_powertools import Logger
+from src.lib.aws_resources import get_website_url
 
 logger = Logger()
 
@@ -25,7 +26,7 @@ def lambda_handler(event, context):
         username = event["request"]["userAttributes"]["email"]
 
         reset_link = (
-            f"https://megsparadisecakes.com/?reset=true"
+            f"https://{get_website_url()}/?reset=true"
             f"?username={urllib.parse.quote(username)}"
             f"&code={urllib.parse.quote(code)}"
         )
