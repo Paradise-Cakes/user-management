@@ -1,6 +1,7 @@
 import urllib.parse
 
 from aws_lambda_powertools import Logger
+
 from src.lib.aws_resources import get_website_url
 
 logger = Logger()
