@@ -23,7 +23,6 @@ def lambda_handler(event, context):
         )
 
     elif trigger_source == "CustomMessage_ForgotPassword":
-        code = event["request"]["codeParameter"]
         username = event["request"]["userAttributes"]["email"]
 
         reset_link = (
@@ -39,5 +38,7 @@ def lambda_handler(event, context):
             f"<p><a href='{reset_link}'>Reset Password</a></p>"
             f"<p>If you did not request this password reset, please ignore this email.</p>"
         )
+        logger.info("Reset link: %s", reset_link)
+        logger.info("Event: %s", event)
 
     return event
