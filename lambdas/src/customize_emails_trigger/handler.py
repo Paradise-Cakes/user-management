@@ -1,3 +1,5 @@
+import urllib.parse
+
 from aws_lambda_powertools import Logger
 
 logger = Logger()
@@ -19,12 +21,21 @@ def lambda_handler(event, context):
         )
 
     elif trigger_source == "CustomMessage_ForgotPassword":
+        code = event["request"]["codeParameter"]
+        username = event["request"]["userAttributes"]["username"]
+
+        reset_link = (
+            f"https://yourdomain.com/?reset=true"
+            f"?username={urllib.parse.quote(username)}"
+            f"&code={urllib.parse.quote(code)}"
+        )
+
         event["response"]["emailSubject"] = "Reset Your Password"
         event["response"]["emailMessage"] = (
-            f"Hello {first_name},<br><br>"
-            "We received a request to reset your password. Your reset code is: "
-            f"<b>{code}</b><br><br>"
-            "If you did not request this, please ignore this email."
+            f"<p>Hello {first_name},</p>"
+            f"<p>Click the link below to reset your password:</p>"
+            f"<p><a href='{reset_link}'>Reset Password</a></p>"
+            f"<p>If you did not request this password reset, please ignore this email.</p>"
         )
 
     return event
