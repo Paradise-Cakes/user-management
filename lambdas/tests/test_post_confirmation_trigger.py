@@ -1,7 +1,7 @@
 import pytest
 from botocore.stub import Stubber
 
-from src.add_user_to_group.handler import client, lambda_handler
+from src.post_confirmation_trigger.handler import client, lambda_handler
 from tests.support import default_context
 
 event = {"userPoolId": "us-east-1_123456789", "userName": "anthony.soprano@gmail.com"}
