@@ -22,7 +22,7 @@ resource "aws_lambda_function" "customize_emails_trigger" {
   }
 }
 
-resource "aws_lambda_function" "post_confirmation_trigger" {
+resource "aws_lambda_function" "add_user_to_group" {
   image_uri     = local.lambda_image
   package_type  = "Image"
   function_name = "post-confirmation-trigger"
@@ -53,7 +53,7 @@ resource "aws_lambda_permission" "allow_cognito_custom_emails" {
 resource "aws_lambda_permission" "allow_cognito_post_confirmation" {
   statement_id  = "AllowAddUserToGroup"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.post_confirmation_trigger.function_name
+  function_name = aws_lambda_function.add_user_to_group.function_name
   principal     = "cognito-idp.amazonaws.com"
   source_arn    = aws_cognito_user_pool.paradise_cakes_user_pool.arn
 }

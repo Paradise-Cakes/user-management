@@ -13,7 +13,7 @@ resource "aws_iam_role" "cognito_lambda_trigger_role" {
   })
 }
 
-resource "aws_iam_policy" "cognito_trigger_policy" {
+resource "aws_iam_policy" "cognito_group_policy" {
   name        = "cognito-trigger-policy"
   description = "Policy to manage Cognito triggers"
 
@@ -39,8 +39,8 @@ resource "aws_iam_policy" "cognito_trigger_policy" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "cognito_trigger_attachment" {
-  policy_arn = aws_iam_policy.cognito_trigger_policy.arn
+resource "aws_iam_role_policy_attachment" "lambda_cognito_attachment" {
+  policy_arn = aws_iam_policy.cognito_group_policy.arn
   role       = aws_iam_role.cognito_lambda_trigger_role.name
 }
 
