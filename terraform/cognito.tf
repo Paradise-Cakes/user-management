@@ -36,7 +36,8 @@ resource "aws_cognito_user_pool" "paradise_cakes_user_pool" {
   name = "paradise-cakes-user-pool"
 
   lambda_config {
-    custom_message = aws_lambda_function.customize_emails_trigger.arn
+    custom_message    = aws_lambda_function.customize_emails_trigger.arn
+    post_confirmation = aws_lambda_function.add_user_to_group.arn
   }
 
   password_policy {
