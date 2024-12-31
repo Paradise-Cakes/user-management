@@ -42,7 +42,7 @@ def test_handler_valid_event_refresh_signin(cognito_stub):
             },
         },
         expected_params={
-            "AuthFlow": "REFRESH_TOKEN",
+            "AuthFlow": "REFRESH_TOKEN_AUTH",
             "AuthParameters": {
                 "REFRESH_TOKEN": "my-super-secret-refresh-token",
             },
@@ -82,7 +82,7 @@ def test_handler_refreshes_refresh_token(cognito_stub):
             },
         },
         expected_params={
-            "AuthFlow": "REFRESH_TOKEN",
+            "AuthFlow": "REFRESH_TOKEN_AUTH",
             "AuthParameters": {
                 "REFRESH_TOKEN": "my-super-secret-refresh-token",
             },

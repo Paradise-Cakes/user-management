@@ -21,7 +21,7 @@ def post_refresh_signin(
 ):
     try:
         auth_response = cognito_client.initiate_auth(
-            AuthFlow="REFRESH_TOKEN",
+            AuthFlow="REFRESH_TOKEN_AUTH",
             AuthParameters={"REFRESH_TOKEN": refresh_token},
             ClientId=cognito_app_client_id,
         )

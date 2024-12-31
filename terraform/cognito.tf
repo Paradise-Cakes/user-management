@@ -14,10 +14,13 @@ resource "aws_cognito_user_pool_client" "paradise_cakes_client" {
   allowed_oauth_flows          = ["code", "implicit"]
   allowed_oauth_scopes         = ["phone", "email", "openid", "aws.cognito.signin.user.admin", "profile"]
   supported_identity_providers = ["COGNITO"]
+  access_token_validity        = 1
   refresh_token_validity       = 30
-  enable_token_revocation      = true
+  id_token_validity            = 1
   token_validity_units {
+    access_token  = "hours"
     refresh_token = "days"
+    id_token      = "hours"
   }
 
   callback_urls = [
@@ -33,7 +36,8 @@ resource "aws_cognito_user_pool" "paradise_cakes_user_pool" {
   name = "paradise-cakes-user-pool"
 
   lambda_config {
-    custom_message = aws_lambda_function.customize_emails_trigger.arn
+    custom_message    = aws_lambda_function.customize_emails_trigger.arn
+    post_confirmation = aws_lambda_function.add_user_to_group.arn
   }
 
   password_policy {
@@ -49,8 +53,8 @@ resource "aws_cognito_user_pool" "paradise_cakes_user_pool" {
   sms_authentication_message = "Your code is {####}"
 
   device_configuration {
-    challenge_required_on_new_device      = true
-    device_only_remembered_on_user_prompt = true
+    challenge_required_on_new_device      = false
+    device_only_remembered_on_user_prompt = false
   }
 
   email_configuration {

@@ -1,9 +1,13 @@
 import os
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from mangum import Mangum
+
+load_dotenv()
+
 
 from src.routes import (
     post_confirm_forgot_password,
