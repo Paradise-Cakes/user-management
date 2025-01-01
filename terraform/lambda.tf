@@ -1,34 +1,12 @@
 locals {
-  lambda_image = "${data.aws_ecr_repository.users_api_lambdas.repository_url}:${var.docker_image_tag}"
-}
-
-resource "aws_lambda_function" "app" {
-  image_uri     = local.lambda_image
-  package_type  = "Image"
-  function_name = "users-api-us-east-1"
-  role          = aws_iam_role.users_api_role.arn
-
-  timeout     = 30
-  memory_size = 1024
-
-  image_config {
-    command = ["src.api.lambda_handler"]
-  }
-
-  environment {
-    variables = {
-      REGION                = "us-east-1"
-      COGNITO_APP_CLIENT_ID = aws_cognito_user_pool_client.paradise_cakes_client.id
-      COGNITO_USER_POOL_ID  = aws_cognito_user_pool.paradise_cakes_user_pool.id
-    }
-  }
+  lambda_image = "${data.aws_ecr_repository.user_management.repository_url}:${var.docker_image_tag}"
 }
 
 resource "aws_lambda_function" "customize_emails_trigger" {
   image_uri     = local.lambda_image
   package_type  = "Image"
   function_name = "customize-emails-trigger"
-  role          = aws_iam_role.users_api_role.arn
+  role          = aws_iam_role.cognito_trigger_role.arn
 
   image_config {
     command = ["src.customize_emails_trigger.handler.lambda_handler"]
@@ -44,14 +22,14 @@ resource "aws_lambda_function" "customize_emails_trigger" {
   }
 }
 
-resource "aws_lambda_function" "add_user_to_group" {
+resource "aws_lambda_function" "post_confirmation_trigger" {
   image_uri     = local.lambda_image
   package_type  = "Image"
-  function_name = "add-user-to-group"
-  role          = aws_iam_role.cognito_lambda_role.arn
+  function_name = "post-confirmation-trigger"
+  role          = aws_iam_role.cognito_trigger_role.arn
 
   image_config {
-    command = ["src.add_user_to_group.handler.lambda_handler"]
+    command = ["src.post_confirmation_trigger.handler.lambda_handler"]
   }
 
   timeout     = 30
@@ -72,12 +50,10 @@ resource "aws_lambda_permission" "allow_cognito_invocation" {
   source_arn    = aws_cognito_user_pool.paradise_cakes_user_pool.arn
 }
 
-resource "aws_lambda_permission" "allow_add_user_to_group" {
+resource "aws_lambda_permission" "allow_cognito_post_confirmation" {
   statement_id  = "AllowAddUserToGroup"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.add_user_to_group.function_name
+  function_name = aws_lambda_function.post_confirmation_trigger.function_name
   principal     = "cognito-idp.amazonaws.com"
   source_arn    = aws_cognito_user_pool.paradise_cakes_user_pool.arn
 }
-
-
