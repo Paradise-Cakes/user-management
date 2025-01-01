@@ -234,8 +234,8 @@ jobs:
           terraform plan --out tfplan.out
 
       - name: Terraform Apply - PROD
-          if: ${{ github.ref == 'refs/heads/main' }}
         id: tf-apply-prod
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           cd ${GITHUB_WORKSPACE}/terraform
           terraform apply --auto-approve tfplan.out
