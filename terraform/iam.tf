@@ -1,5 +1,5 @@
-resource "aws_iam_role" "cognito_lambda_role" {
-  name = "cognito-lambda-role"
+resource "aws_iam_role" "cognito_trigger_role" {
+  name = "cognito-trigger-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -13,9 +13,9 @@ resource "aws_iam_role" "cognito_lambda_role" {
   })
 }
 
-resource "aws_iam_policy" "cognito_group_policy" {
-  name        = "cognito-group-policy"
-  description = "Policy to manage Cognito groups"
+resource "aws_iam_policy" "cognito_trigger_policy" {
+  name        = "cognito-trigger-policy"
+  description = "Policy to manage Cognito triggers"
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -40,7 +40,7 @@ resource "aws_iam_policy" "cognito_group_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_cognito_attachment" {
-  policy_arn = aws_iam_policy.cognito_group_policy.arn
-  role       = aws_iam_role.cognito_lambda_role.name
+  policy_arn = aws_iam_policy.cognito_trigger_policy.arn
+  role       = aws_iam_role.cognito_trigger_role.name
 }
 
