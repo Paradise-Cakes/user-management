@@ -7,3 +7,5 @@ RUN cd ${LAMBDA_TASK_ROOT} && \
     poetry export -f requirements.txt --without-hashes > requirements.txt && \
     sed -i '/^uuid==/d' requirements.txt && \
     python -m pip install -r requirements.txt
+
+CMD ["src.api.lambda_handler"]
