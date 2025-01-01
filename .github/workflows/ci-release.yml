@@ -160,8 +160,8 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/terraform
           terraform init \
-            --backend-config="bucket=users-dev-api-tfstate" \
-            --backend-config="key=users-dev-api.tfstate"
+            --backend-config="bucket=user-management-dev-tfstate" \
+            --backend-config="key=user-management-dev.tfstate"
 
       - name: Terraform Plan - DEV
         id: tf-plan-dev
@@ -219,8 +219,8 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/terraform
           terraform init \
-            --backend-config="bucket=users-api-tfstate" \
-            --backend-config="key=users-api.tfstate"
+            --backend-config="bucket=user-management-tfstate" \
+            --backend-config="key=user-management.tfstate"
 
       - name: Terraform Plan - PROD
         id: tf-plan-prod
