@@ -43,4 +43,3 @@ resource "aws_iam_role_policy_attachment" "lambda_cognito_attachment" {
   policy_arn = aws_iam_policy.cognito_trigger_policy.arn
   role       = aws_iam_role.cognito_trigger_role.name
 }
-

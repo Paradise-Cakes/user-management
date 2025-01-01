@@ -181,12 +181,11 @@ jobs:
           terraform apply --auto-approve tfplan.out
 
   tf-prod:
-    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     environment: prod
     concurrency: tf-prod
     timeout-minutes: 30
-    needs: [ecr-build-push-prod-us-east-1, tf-dev]
+    needs: [tf-dev]
 
     steps:
       - name: Checkout code
@@ -236,6 +235,7 @@ jobs:
 
       - name: Terraform Apply - PROD
         id: tf-apply-prod
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           cd ${GITHUB_WORKSPACE}/terraform
           terraform apply --auto-approve tfplan.out
