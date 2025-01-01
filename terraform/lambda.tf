@@ -1,5 +1,5 @@
 locals {
-  lambda_image = "${data.aws_ecr_repository.users_api_lambdas.repository_url}:${var.docker_image_tag}"
+  lambda_image = "${data.aws_ecr_repository.user_management.repository_url}:${var.docker_image_tag}"
 }
 
 resource "aws_lambda_function" "customize_emails_trigger" {
